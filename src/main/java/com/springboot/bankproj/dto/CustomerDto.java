@@ -1,5 +1,7 @@
 package com.springboot.bankproj.dto;
 
+import com.springboot.bankproj.entities.Address;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,4 +19,6 @@ public class CustomerDto {
 	private String dob;
 	
 	private String email;
+	
+	private Address address;
 }

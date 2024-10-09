@@ -5,11 +5,11 @@ import com.springboot.bankproj.entities.Customer;
 
 public class CustomerMapper {
 	public static Customer mapToCustomer(CustomerDto dto) {
-		Customer customer=new Customer(dto.getId(), dto.getPassword(), dto.getName(), dto.getDob(), dto.getEmail());
+		Customer customer=new Customer(dto.getId(), dto.getPassword(), dto.getName(), dto.getDob(), dto.getEmail(), dto.getAddress());
 		return customer;
 	}
 	public static CustomerDto mapToCustomerDto(Customer customer) {
-		CustomerDto customerDto=new CustomerDto(customer.getId(), customer.getPassword(), customer.getName(), customer.getDob(), customer.getEmail());
+		CustomerDto customerDto=new CustomerDto(customer.getId(), customer.getPassword(), customer.getName(), customer.getDob(), customer.getEmail(), customer.getAddress());
 		return customerDto;
 	}
 }

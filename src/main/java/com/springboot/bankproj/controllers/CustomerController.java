@@ -1,8 +1,12 @@
 package com.springboot.bankproj.controllers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +19,7 @@ import com.springboot.bankproj.dto.CustomerDto;
 import com.springboot.bankproj.service.CustomerService;
 
 @RestController
+@CrossOrigin(origins="http://localhost:3000")
 @RequestMapping(value="/api/customer")
 public class CustomerController {
 	@Autowired
@@ -22,8 +27,27 @@ public class CustomerController {
 	
 	@PostMapping(value="/createProfile")
 	public ResponseEntity<CustomerDto> createProfile(@RequestBody CustomerDto request){
-		CustomerDto newProfile=customerService.createCustomer(request);
-		return new ResponseEntity<>(newProfile, HttpStatus.CREATED);
+		try {
+			CustomerDto newProfile=customerService.createCustomer(request);
+			return new ResponseEntity<>(newProfile, HttpStatus.CREATED);
+		}catch(RuntimeException e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@PostMapping(value="/login")
+	public ResponseEntity<Object> login(@RequestBody CustomerDto request) {
+		Object result=customerService.validateUser(request);
+		if(result!=null) {
+			return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
+		}
+		else {
+			Map<String,Object> error=new HashMap<>();
+			error.put("Name", null);
+			error.put("Id", null);
+			error.put("Result", "Failure");
+			return new ResponseEntity<>(error , HttpStatus.NOT_ACCEPTABLE);
+		}
 	}
 	
 	@PutMapping(value="/updateProfile/{id}")
@@ -32,7 +56,7 @@ public class CustomerController {
 			CustomerDto updatedProfile=customerService.updateCustomer(id, request);
 			return new ResponseEntity<>(updatedProfile, HttpStatus.OK);
 		}catch(RuntimeException e) {
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 		}
 	}
 	

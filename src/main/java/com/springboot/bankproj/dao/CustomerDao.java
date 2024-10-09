@@ -7,5 +7,5 @@ import com.springboot.bankproj.entities.Customer;
 
 @Repository
 public interface CustomerDao extends JpaRepository<Customer,Long>{
-
+	public Customer findByEmailAndPassword(String email, String password);
 }

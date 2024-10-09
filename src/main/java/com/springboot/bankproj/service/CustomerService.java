@@ -8,4 +8,6 @@ public interface CustomerService {
 	public CustomerDto updateCustomer(Long id, CustomerDto dto);
 	
 	public void deleteCustomer(Long id);
+
+	public Object validateUser(CustomerDto request);
 }

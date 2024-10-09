@@ -1,15 +1,10 @@
 package com.springboot.bankproj.entities;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,16 +13,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Account {
+public class Address {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	
-	@OneToOne
-	@JoinColumn(name="cid")
-	@OnDelete(action=OnDeleteAction.CASCADE)
-	private Customer customer;
+	@Column(name="str_address")
+	private String strAddress;
 	
-	@Column(name="account_balance")
-	private double balance;
+	@Column(name="city")
+	private String city;
+	
+	@Column(name="state")
+	private String state;
+	
+	@Column(name="zip_code")
+	private Long zip;
+	
+	@Column(name="country")
+	private String country;
 }
